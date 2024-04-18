@@ -14,9 +14,9 @@ import java.util.*;
  * @author Vian Miranda (Rutgers University)
  * 
  * 
- * @name  Ethan Wang
- * @date  December 22, 2023
- * @class Period 3
+ * @name  (your name goes here)
+ * @date  (due date)
+ * @class (class period)
  * 
  */
 public class RisingTides {
@@ -45,19 +45,7 @@ public class RisingTides {
     public double[] elevationExtrema() {
 
         /* WRITE YOUR CODE BELOW */
-    	double extremaMax = terrain[0][0];
-    	double extremaMin = terrain[0][0];
-    	double subject;
-
-    	for (int i=0; i<terrain.length; i++) {
-    		for (int j=0; j<terrain[i].length; j++) {
-    			subject = terrain[i][j];
-    			if (subject<extremaMin) extremaMin=subject;
-    			if (subject>extremaMax) extremaMax=subject;
-    		}
-    	}
-    	double[] info = {extremaMin, extremaMax};
-        return info; // substitute this line. It is provided so that the code compiles.
+        return null; // substitute this line. It is provided so that the code compiles.
     }
 
     /** 10 points
@@ -76,40 +64,7 @@ public class RisingTides {
     public boolean[][] floodedRegionsIn(double height) {
         
         /* WRITE YOUR CODE BELOW */
-    	boolean[][] result = new boolean[terrain.length][terrain[0].length];
-
-    	ArrayList<GridLocation> GridLocations = new ArrayList<GridLocation>();
-    	for (int i=0; i<sources.length ;i++) {
-    		GridLocations.add(sources[i]);
-    	}
-    	while (GridLocations.size() > 0) {
-    		int r = GridLocations.get(0).row;
-    		int c = GridLocations.get(0).col;
-    		if (terrain[r][c]<height) result[r][c]=true;
-    		GridLocations.remove(0);
-
-    		if ((r<terrain.length-1)&&(terrain[r+1][c]<=height)&&result[r+1][c]==false) { 
-    			result[r+1][c] = true;
-    			GridLocation s = new GridLocation(r+1,c);
-    			GridLocations.add(s);
-    		}
-    		if ((r>0)&&(terrain[r-1][c]<=height)&&result[r-1][c]==false) { 
-    			result[r-1][c] = true;
-    			GridLocation n = new GridLocation(r-1,c);
-    			GridLocations.add(n);
-    		}
-    		if ((c<terrain[r].length-1)&&(terrain[r][c+1]<=height)&&result[r][c+1]==false) { 
-    			result[r][c+1] = true;
-    			GridLocation e = new GridLocation(r,c+1);
-    			GridLocations.add(e);
-    		}
-    		if ((c>0)&&(terrain[r][c-1]<=height)&&result[r][c-1]==false) { 
-    			result[r][c-1] = true;
-    			GridLocation w = new GridLocation(r,c-1);
-    			GridLocations.add(w);
-    		}
-    	}
-        return result; // substitute this line. It is provided so that the code compiles.
+        return null; // substitute this line. It is provided so that the code compiles.
     }
 
     /** 5 points
@@ -123,8 +78,7 @@ public class RisingTides {
     public boolean isFlooded(double height, GridLocation cell) {
         
         /* WRITE YOUR CODE BELOW */
-    	boolean[][] floodResults = floodedRegionsIn(height);
-    	return floodResults[cell.row][cell.col]; // substitute this line. It is provided so that the code compiles.
+        return false; // substitute this line. It is provided so that the code compiles.
     }
 
     /** 5 points
@@ -143,7 +97,7 @@ public class RisingTides {
     public double heightAboveWater(double height, GridLocation cell) {
         
         /* WRITE YOUR CODE BELOW */
-        return terrain[cell.row][cell.col]-height; // substitute this line. It is provided so that the code compiles.
+        return -1; // substitute this line. It is provided so that the code compiles.
     }
 
     /** 5 points
@@ -156,14 +110,7 @@ public class RisingTides {
     public int totalVisibleLand(double height) {
         
         /* WRITE YOUR CODE BELOW */
-    	boolean[][] floodResults = floodedRegionsIn(height);
-    	int count = 0;
-    	for (int i=0; i<floodResults.length; i++) {
-    		for (int j=0; j<floodResults[i].length; j++) {
-    			if (floodResults[i][j]==false) count++;
-    		}
-    	}
-        return count; // substitute this line. It is provided so that the code compiles.
+        return -1; // substitute this line. It is provided so that the code compiles.
     } 
 
 
@@ -182,7 +129,7 @@ public class RisingTides {
     public int landLost(double height, double newHeight) {
         
         /* WRITE YOUR CODE BELOW */
-        return totalVisibleLand(height)- totalVisibleLand(newHeight); // substitute this line. It is provided so that the code compiles.
+        return -1; // substitute this line. It is provided so that the code compiles.
     }
 
     /** 10 points
@@ -205,58 +152,6 @@ public class RisingTides {
     public int numOfIslands(double height) {
         
         /* WRITE YOUR CODE BELOW */
-    	boolean[][] floodResults = floodedRegionsIn(height);
-    	WeightedQuickUnionUF result = new WeightedQuickUnionUF(terrain.length,terrain[0].length);
-    	
-    	for (int r=0; r<terrain.length; r++) {
-    		for (int c=0; c<terrain[r].length; c++) {
-    			GridLocation og = new GridLocation(r,c);
-    			if(!floodResults[r][c]) {
-	
-	    			if ((r<terrain.length-1)&&!(floodResults[r+1][c])) { //south
-		    			GridLocation s = new GridLocation(r+1,c);
-		    			result.union(og,s);
-		    		}
-	    			if ((r<terrain.length-1)&&(c<terrain[r].length-1)&&!(floodResults[r+1][c+1])) { //south east
-		    			GridLocation se = new GridLocation(r+1,c+1);
-		    			result.union(og,se);
-		    		}
-	    			if ((r<terrain.length-1)&&(c>0)&&!(floodResults[r+1][c-1])) { //south west
-		    			GridLocation sw = new GridLocation(r+1,c-1);
-		    			result.union(og,sw);
-		    		}
-		    		if ((r>0)&&!(floodResults[r-1][c])) { //north
-		    			GridLocation n = new GridLocation(r-1,c);
-		    			result.union(og,n);
-		    		}
-		    		if ((r>0)&&(c<terrain[r].length-1)&&!(floodResults[r-1][c+1])) { //north east
-		    			GridLocation ne = new GridLocation(r-1,c+1);
-		    			result.union(og,ne);
-		    		}
-		    		if ((r>0)&&(c>0)&&!(floodResults[r-1][c-1])) { //north west
-		    			GridLocation nw = new GridLocation(r-1,c-1);
-		    			result.union(og,nw);
-		    		}
-		    		if ((c<terrain[r].length-1)&&!(floodResults[r][c+1])) { //east
-		    			GridLocation e = new GridLocation(r,c+1);
-		    			result.union(og,e);
-		    		}
-		    		if ((c>0)&&!(floodResults[r][c-1])) { //west
-		    			GridLocation w = new GridLocation(r,c-1);
-		    			result.union(og,w);
-		    		}
-    			}
-    		}
-    	}
-    	int count = 0;
-    	for (int ro=0; ro<terrain.length; ro++) {
-    		for (int co=0; co<terrain[ro].length; co++) {
-    			if ((floodResults[ro][co]==false)&&(result.find(new GridLocation(ro,co)).equals(new GridLocation(ro,co)))) {
-    				count++;
-    			}
-    		}
-    	}
-
-        return count; // substitute this line. It is provided so that the code compiles.
+        return -1; // substitute this line. It is provided so that the code compiles.
     }
 }
